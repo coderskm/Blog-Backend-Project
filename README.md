@@ -92,9 +92,7 @@ Refer below sample
 {
   "title": "How to win friends",
   "body": "Blog body",
-  "tags": ["Book", "Friends", "Self help"],
   "category": "Book",
-  "subcategory": ["Non fiction", "Self Help"],
   "published": false,
   "publishedAt": "", // if published is true publishedAt will have a date 2021-09-17T04:25:07.803Z
   "deleted": false,
