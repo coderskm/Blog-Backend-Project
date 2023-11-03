@@ -35,22 +35,17 @@
 - Return HTTP status 400 for an invalid request.
 
 ### PUT /blogs/:blogId
-- Updates a blog by changing the its title, body, adding tags, adding a subcategory. (Assuming tag and subcategory received in body is need to be added)
-- Updates a blog by changing its publish status i.e. adds publishedAt date and set published to true
-- Check if the blogId exists (must have isDeleted false). If it doesn't, return an HTTP status 404 with a response body like [this](#error-response-structure)
-- Return an HTTP status 200 if updated successfully with a body like [this](#successful-response-structure) 
+- Updates a blog by changing the its title, body, category and isPublished.
+- Updates a blog by changing its publish status i.e. adds publishedAt date and set published to true.
+- Check if the blogId exists (must have isDeleted false). If it doesn't, return an HTTP status 404 with a response body like [this](#error-response-structure).
+- Return an HTTP status 200 if updated successfully with a body like [this](#successful-response-structure).
 - Also make sure in the response you return the updated blog document. 
 
 ### DELETE /blogs/:blogId
-- Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 without any response body.
+- Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 with response body.
 - If the blog document doesn't exist then return an HTTP status of 404 with a body like [this](#error-response-structure) 
 
 
-
-
-Refer below sample
-
- ![A Postman collection and request sample](assets/Postman-collection-sample.png)
 
 ## Response
 
@@ -73,9 +68,6 @@ Refer below sample
 ```
 
 
-
-
-
 ## Collections
 ### Blogs
 ```yaml
@@ -84,9 +76,9 @@ Refer below sample
   "body": "Blog body",
   "category": "Book",
   "published": false,
-  "publishedAt": "", // if published is true publishedAt will have a date 2021-09-17T04:25:07.803Z
+  "publishedAt": null, // if published is true publishedAt will have a date 2021-09-17T04:25:07.803Z
   "deleted": false,
-  "deletedAt": "", // if deleted is true deletedAt will have a date 2021-09-17T04:25:07.803Z,
+  "deletedAt": null, // if deleted is true deletedAt will have a date 2021-09-17T04:25:07.803Z,
   "createdAt": "2021-09-17T04:25:07.803Z",
   "updatedAt": "2021-09-17T04:25:07.803Z",
 }
