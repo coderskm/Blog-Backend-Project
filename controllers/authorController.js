@@ -18,8 +18,6 @@ const isValidTitle = function (title) {
 const createAuthor = async function (req, res) {
   try {
     let data = req.body;
-    let nameRegex = /^[a-zA-Z ]{2,30}$/;
-    let emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (!isValidBody(data)) {
       return res.status(400).send({ status: false, message: "author details required" });
     }
@@ -36,22 +34,10 @@ const createAuthor = async function (req, res) {
     if (!isValid(email)) {
       return res.status(400).send({ status: false, message: "email is required" });
     }
-    if (!isValid(password)) { 
+    if (!isValid(password)) {
       return res.status(400).send({ status: false, message: "password is required" });
     }
 
-    if (!fname.match(nameRegex))
-      return res.status(400).send({
-        status: false,
-        msg: "first name should have alphabets only",
-      });
-    if (!lname.match(nameRegex))
-      return res.status(400).send({
-        status: false,
-        msg: "last name should have alphabets only",
-      });
-    if (!email.match(emailRegex))
-      return res.status(400).send({ status: false, msg: "Email is not legit" });
     const emailInUse = await authorModel.findOne({ email: email });
     if (emailInUse) {
       return res.status(400).send({ status: false, message: "email entered is already in use" });
@@ -66,8 +52,6 @@ const createAuthor = async function (req, res) {
 
 const login = async function (req, res) {
   try {
-    let emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-
     const data = req.body;
     if (!isValidBody(data)) {
       return res.status(400).send({ status: false, message: "Please provide email and password" });
@@ -77,10 +61,9 @@ const login = async function (req, res) {
     if (!isValid(email)) {
       return res.status(400).send({
         status: false,
-        message: "email is required ",
+        message: "email is required",
       });
     }
-    if (!email.match(emailRegex)) return res.status(400).send({ status: false, msg: "Email is not legit" });
     if (!isValid(password)) {
       return res.status(400).send({ status: false, message: "password is required" });
     }
@@ -90,12 +73,10 @@ const login = async function (req, res) {
       password: password,
     });
     if (!checkCredentials) {
-      return res
-        .status(400) 
-        .send({ status: false, message: "invalid login data" });
+      return res.status(400).send({ status: false, message: "invalid login data" });
     }
     let token = jwt.sign({ authorId: checkCredentials._id.toString() }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_LIFETIME
+      expiresIn: process.env.JWT_LIFETIME,
     });
     res.header("x-api-key", token);
     res.status(200).send({ status: true, token: token });

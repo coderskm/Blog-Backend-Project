@@ -52,7 +52,6 @@ const createBlog = async function (req, res) {
       data.publishedAt = new Date();
     }
     
-    
     let authorData = await authorModel.findById(authorId);
     if (!authorData)
       return res.status(400).send({ status: false, msg: "authorId not found" });
@@ -84,7 +83,7 @@ const updateBlog = async function (req, res) {
       isDeleted: false,
     });
     if (!blogs) {
-      return res.status(404).send({ status: false, msg: "no blogs found." });
+      return res.status(404).send({ status: false, msg: "no blogs found" });
     }
     if (blogs.authorId != req.decodedToken.authorId) {
       return res.status(403).send({ status: false, msg: "not authorized" });
@@ -93,29 +92,36 @@ const updateBlog = async function (req, res) {
     if (data.title) {
       if (!isValid(data.title)) {
         return res.status(400).send({ status: false, msg: " title not valid" });
-      }
-      updatedData.title = data.title;
+      } else {
+        updatedData.title = data.title;
+      }  
     }
+
     if (data.body) {
       if (!isValid(data.body)) {
         return res.status(400).send({ status: false, msg: " title not valid" });
-      }
+      } else {
       updatedData.body = data.body;
+      }
     }
     if (data.category) {
       if (!isValid(data.category)) {
         return res.status(400).send({ status: false, msg: " category not valid" });
-      }
+      } else {
       updatedData.category = data.category;
+      }
     }
     if (data.isPublished) {
       if (data.isPublished === true) {
         updatedData.publishedAt = new Date();
-      } else {
-        updatedData.publishedAt = " ";
       }
       updatedData.isPublished = data.isPublished;
+    } else {
+        updatedData.publishedAt = null;
+      updatedData.isPublished = data.isPublished;
+      
     }
+
     let updatedBlog = await blogModel.findOneAndUpdate(
       { _id: req.params.blogId, isDeleted: false },
       updatedData,
