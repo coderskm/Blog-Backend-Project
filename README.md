@@ -17,9 +17,8 @@
 ### POST /blogs
 - Create a blog document from request body. Get authorId in request body only.
 - Make sure the authorId is a valid authorId by checking the author exist in the authors collection.
-- Return HTTP status 201 on a succesful blog creation. Also return the blog document. The response should be a JSON object like [this](#successful-response-structure) 
-
-- Return HTTP status 400 for an invalid request with a response body like [this](#error-response-structure)
+- Return HTTP status 201 on a succesful blog creation. Also return the blog document. 
+- Return HTTP status 400 for an invalid request.
 
 ### PUT /blogs/:blogId
 - Updates a blog by changing the its title, body, adding tags, adding a subcategory. (Assuming tag and subcategory received in body is need to be added)
